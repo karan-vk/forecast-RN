@@ -5,7 +5,7 @@ require("firebase/firestore");
 require("firebase/firebase-storage");
 
 export default function Save(props, { navigation }) {
-  console.log(props.route.params.image);
+  // console.log(props.route.params.image);
   const [caption, setCaption] = useState("");
 
   const uploadImage = async () => {
@@ -26,13 +26,13 @@ export default function Save(props, { navigation }) {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
+        // console.log("Upload is " + progress + "% done");
         switch (snapshot.state) {
           case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log("Upload is paused");
+            // console.log("Upload is paused");
             break;
           case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log("Upload is running");
+            // console.log("Upload is running");
             break;
         }
       },
@@ -61,7 +61,7 @@ export default function Save(props, { navigation }) {
         creation: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(function() {
-        aprops.navigation.popToTop();
+        props.navigation.popToTop();
       });
   };
 

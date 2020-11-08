@@ -27,7 +27,7 @@ export default class Register extends Component {
             name: name,
             email: email,
           });
-        console.log(user);
+        // console.log(user);
       })
       .catch((e) => console.log(e));
   }
