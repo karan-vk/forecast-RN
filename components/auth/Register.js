@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import * as firebase from "firebase";
 import { TextInput, View, Button } from "react-native";
-import firebase from "firebase"; //install react-native-screens
+import * as firebase from "firebase"; //install react-native-screens
 
 export default class Register extends Component {
   constructor(props) {
@@ -18,7 +18,17 @@ export default class Register extends Component {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((user) => console.log(user))
+      .then((user) => {
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(firebase.auth().currentUser.uid)
+          .set({
+            name: name,
+            email: email,
+          });
+        console.log(user);
+      })
       .catch((e) => console.log(e));
   }
 

@@ -6,8 +6,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LandingScreen from "./components/auth/Landing";
 import RegisterScreen from "./components/auth/Register";
 import LoginScreen from "./components/auth/Login";
-
+import MainScreen from "./components/Main";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./redux/reducers";
+import thunk from "redux-thunk";
 import firebase from "firebase";
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 let firebaseConfig = {
   apiKey: "AIzaSyBAq55GB6s2ztImZC_aFChlxCpb_ujCCfo",
@@ -30,6 +35,7 @@ export class App extends Component {
     super(props);
     this.state = {
       loaded: false,
+      loggedIn: false,
     };
   }
   componentDidMount() {
@@ -72,9 +78,17 @@ export class App extends Component {
       );
     }
     return (
-      <View>
-        <Text>LoggedIn</Text>
-      </View>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Landing">
+            <Stack.Screen
+              name="Landing"
+              component={MainScreen}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     );
   }
 }
